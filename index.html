@@ -26,28 +26,59 @@
             overflow-x: hidden;
         }
 
-        /* Hiệu ứng Accordion/Toggle */
+        /* Hiệu ứng Accordion/Toggle MỚI */
         .accordion-header {
             cursor: pointer;
             padding: 1.5rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease;
-            position: relative; /* Cho icon */
-            z-index: 10; /* Đảm bảo nút được nhấp */
+            border-radius: 0.75rem; /* Góc bo lớn hơn */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
+            position: relative;
+            z-index: 10;
+            border-left: 5px solid transparent; /* Tạo đường viền trái nổi bật */
         }
         .accordion-header:hover {
             background-color: #1e293b; /* Slate 800 hover */
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2); /* Bóng đổ cam mờ */
         }
+
+        /* Thiết lập màu tiêu đề (Chung) */
+        .accordion-header h2 {
+            font-weight: 700;
+            letter-spacing: 0.05em; /* Tăng khoảng cách chữ */
+            transition: color 0.3s;
+        }
+
+        /* Phong cách Icon */
+        .accordion-header span {
+            font-size: 2.5rem; /* Kích thước lớn hơn */
+            font-weight: 200; /* Nhẹ hơn */
+            transition: transform 0.3s, font-weight 0.3s;
+        }
+        .accordion-header:hover span {
+            font-weight: 700; /* Đậm hơn khi hover */
+        }
+
+        /* Màu sắc theo từng phần */
+        #summary .accordion-header { border-left-color: var(--color-primary); }
+        #timeline-section .accordion-header { border-left-color: var(--color-secondary); }
+        #gallery-section .accordion-header { border-left-color: var(--color-primary); }
+        #quiz-section .accordion-header { border-left-color: var(--color-secondary); }
+        
+        /* Nội dung chi tiết */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.7s ease-in-out, padding 0.5s ease;
             padding: 0 1.5rem;
         }
+        /* Mặc định cho nội dung đã mở */
         .accordion-content.active {
-            max-height: 2000px; /* Giá trị lớn để chứa nội dung */
+            max-height: 2000px;
             padding: 1.5rem;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
         }
+
 
         /* Phong cách Điện ảnh / Glow / Bokeh */
         .hero-bg-overlay {
@@ -129,22 +160,52 @@
 
         /* CSS cho Parallax sections (nền mới) */
         .bg-parallax-1 {
-            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=GEAR+FACTORY'); /* Ảnh nền xưởng máy */
+            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=GEAR+FACTORY'); 
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
         }
         .bg-parallax-2 {
-            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=STEAM+ENGINE+DETAIL'); /* Ảnh nền chi tiết máy hơi nước */
+            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=STEAM+ENGINE+DETAIL'); 
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
         }
         .bg-parallax-3 {
-            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=INDUSTRIAL+TIMELINE'); /* Ảnh nền khác */
+            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=INDUSTRIAL+TIMELINE'); 
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
+        }
+
+        /* CSS cho Quiz rút gọn & Đáp án */
+        .quiz-option-btn {
+            padding: 8px 12px;
+            margin: 4px;
+            border-radius: 6px;
+            border: 1px solid #475569; /* slate-600 */
+            background-color: #334155; /* slate-700 */
+            transition: background-color 0.2s ease, transform 0.1s;
+            cursor: pointer;
+            flex-shrink: 0;
+            text-align: center;
+        }
+        /* Đã chọn (trước khi nộp) */
+        .quiz-option-btn.selected {
+            background-color: #3b82f6; /* blue-500 */
+            border-color: #3b82f6;
+        }
+        /* Đáp án Đúng (sau khi nộp) */
+        .quiz-option-btn.correct {
+            background-color: #10b981; /* green-500 */
+            border-color: #10b981;
+            font-weight: bold;
+        }
+        /* Đáp án Sai người dùng chọn (sau khi nộp) */
+        .quiz-option-btn.incorrect {
+            background-color: #f97316; /* orange-600 */
+            border-color: #f97316;
+            text-decoration: line-through;
         }
     </style>
 </head>
@@ -178,10 +239,10 @@
         <section id="summary" class="bg-slate-800 rounded-xl shadow-2xl overflow-hidden relative z-10">
             <div class="accordion-header flex justify-between items-center text-orange-500">
                 <h2 class="text-3xl font-bold">📚 Tóm tắt & Mục tiêu</h2>
-                <span class="text-3xl font-bold transition duration-300 transform rotate-0" id="icon-summary">+</span>
+                <span class="text-3xl font-bold transition duration-300 transform rotate-45" id="icon-summary">×</span> 
             </div>
             
-            <div class="accordion-content bg-parallax-1 bg-fixed py-8">
+            <div class="accordion-content active bg-parallax-1 bg-fixed py-8">
                 <div class="grid md:grid-cols-2 gap-10 border-t border-slate-700 pt-6 bg-slate-800/80 p-6 rounded-lg">
                     <div class="p-4 rounded-xl border-l-4 border-orange-500">
                         <h3 class="text-2xl font-semibold mb-4 text-orange-400">Tóm tắt Nội dung</h3>
@@ -309,28 +370,29 @@
     </footer>
 
     <script>
-        // Dữ liệu Quiz (Giữ nguyên)
+        // Dữ liệu Quiz
         const quizData = [
             {
                 question: "1. Nguồn năng lượng chủ yếu của Cách mạng Công nghiệp thời hiện đại (Lần 2) là gì?",
                 options: ["Than đá", "Điện năng và dầu mỏ", "Năng lượng gió", "Hơi nước"],
-                correct: 1
+                correct: 1 
             },
             {
                 question: "2. Thành tựu khoa học kỹ thuật nào đã làm thay đổi ngành giao thông vận tải cá nhân?",
                 options: ["Máy hơi nước", "Máy dệt chạy bằng sức nước", "Động cơ đốt trong", "Kĩ thuật luyện gang thép"],
-                correct: 2
+                correct: 2 
             },
             {
                 question: "3. Hệ quả lớn nhất của CMCN lần 2 đối với sản xuất là gì?",
                 options: ["Thủ công nghiệp phát triển", "Áp dụng dây chuyền sản xuất hàng loạt", "Sản xuất nông nghiệp tăng", "Thương mại bị đình trệ"],
-                correct: 1
+                correct: 1 
             }
         ];
 
-        let userAnswers = {}; // Lưu trữ đáp án của người dùng
+        let userAnswers = {}; 
+        let quizSubmitted = false; 
 
-        // Hàm render Quiz (Giữ nguyên)
+        // Hàm render Quiz
         function renderQuiz() {
             const container = document.getElementById('quiz-container');
             container.innerHTML = '';
@@ -342,24 +404,24 @@
                 qDiv.innerHTML = `<h3 class="text-xl font-bold mb-4 text-white">${q.question}</h3>`;
                 
                 const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'space-y-3';
+                optionsDiv.className = 'flex flex-wrap gap-2 justify-center'; 
                 
                 q.options.forEach((option, oIndex) => {
                     const button = document.createElement('button');
                     button.textContent = option;
                     button.setAttribute('data-qindex', qIndex);
                     button.setAttribute('data-oindex', oIndex);
-                    button.className = 'quiz-option w-full text-left p-3 rounded-lg border border-slate-600 bg-slate-600 hover:bg-blue-600 transition duration-200';
+                    button.className = 'quiz-option-btn';
                     
                     button.onclick = function() {
+                        if (quizSubmitted) return; 
+
                         userAnswers[qIndex] = oIndex;
                         
                         document.querySelectorAll(`[data-qindex='${qIndex}']`).forEach(btn => {
-                            btn.classList.remove('bg-blue-500', 'border-blue-500');
-                            btn.classList.add('bg-slate-600', 'border-slate-600');
+                            btn.classList.remove('selected');
                         });
-                        this.classList.remove('bg-slate-600', 'border-slate-600');
-                        this.classList.add('bg-blue-500', 'border-blue-500');
+                        this.classList.add('selected');
                     };
                     optionsDiv.appendChild(button);
                 });
@@ -369,13 +431,31 @@
             });
         }
 
-        // Hàm kiểm tra kết quả (Giữ nguyên)
+        // Hàm kiểm tra kết quả và hiển thị đáp án
         document.getElementById('submit-quiz').addEventListener('click', function() {
+            if (quizSubmitted) return; 
+            
             let correctCount = 0;
+            quizSubmitted = true; 
+            
             quizData.forEach((q, i) => {
-                if (userAnswers[i] !== undefined && userAnswers[i] === q.correct) {
+                const isCorrect = (userAnswers[i] !== undefined && userAnswers[i] === q.correct);
+                if (isCorrect) {
                     correctCount++;
                 }
+
+                document.querySelectorAll(`[data-qindex='${i}']`).forEach(btn => {
+                    const oIndex = parseInt(btn.getAttribute('data-oindex'));
+                    btn.disabled = true; 
+                    
+                    if (oIndex === q.correct) {
+                        btn.classList.add('correct');
+                    } else if (oIndex === userAnswers[i] && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    } else {
+                        btn.classList.remove('selected');
+                    }
+                });
             });
 
             const resultDiv = document.getElementById('quiz-result');
@@ -391,10 +471,14 @@
                 resultDiv.classList.add('bg-red-700', 'text-white');
                 resultDiv.innerHTML = `Bạn đã trả lời đúng ${correctCount}/${quizData.length} câu.<p class="mt-2">Hãy xem lại bài!</p>`;
             }
+
+            this.textContent = 'Đã Nộp Bài (Xem Kết Quả)';
+            this.classList.remove('bg-orange-600', 'hover:bg-orange-700');
+            this.classList.add('bg-slate-600');
         });
 
         // ===============================================
-        // CHỨC NĂNG ACCORDION/TOGGLE MỚI
+        // CHỨC NĂNG ACCORDION/TOGGLE
         // ===============================================
         
         function toggleAccordion(event) {
@@ -403,7 +487,7 @@
 
             let section = header.parentElement;
             let content = section.querySelector('.accordion-content');
-            let icon = header.querySelector('span'); // Tìm icon trong header
+            let icon = header.querySelector('span');
 
             // Toggle active class
             content.classList.toggle('active');
@@ -431,4 +515,3 @@
     </script>
 </body>
 </html>
-```http://googleusercontent.com/image_generation_content/0
