@@ -4,120 +4,279 @@
   <meta charset="UTF-8">
   <title>Cách mạng Công nghiệp - Lịch sử 10 | Bài 7</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- ... [PHẦN HEAD KHÔNG ĐỔI, như code trước] ... -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap">
   <style>
-    /* ... [CSS KHÔNG ĐỔI] ... */
-    .achievements-section {
-      width: 90vw;
-      max-width: 900px;
-      margin: auto;
-      background: linear-gradient(120deg, #23262bb8, #293244fa 100%);
-      border-radius: 18px;
-      padding: 36px 22px 26px 32px;
-      box-shadow: 0 7px 39px #000a;
-      margin-bottom: 2em;
-      outline: none;
-      color: #fffbe3;
-      font-size: 1.08em;
-      line-height: 1.73;
-      position: relative;
+    :root {
+      --dark-bg: #191a23;
+      --neon-orange: #ffad47;
+      --neon-blue: #1ec8e9;
+      --text-glow: 0 0 8px #fff, 0 0 25px var(--neon-blue);
+      --neon-glow: 0 0 18px var(--neon-orange);
+      --warm-light: #ffd6a0;
+      --timeline-bg: #222430bb;
+      --primary-font: 'Montserrat', sans-serif;
+      --title-font: 'Orbitron', sans-serif;
     }
-    .achievements-section h2 {
-      color: var(--neon-orange);
+    html, body {
+      padding: 0; margin: 0;
+      background: var(--dark-bg);
+      color: #fff;
+      font-family: var(--primary-font);
+      min-height: 100%;
+      scroll-behavior: smooth;
+      overflow: hidden;
+    }
+    .section {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.6s, transform 0.7s cubic-bezier(.77,.01,.23,1);
+      opacity: 0;
+      transform: scale(0.98) translateY(60px);
+      pointer-events: none;
+    }
+    .section.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+      transition-delay: 0s;
+      z-index: 2;
+    }
+    .hero-title {
       font-family: var(--title-font);
-      font-size: 2em;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-      text-shadow: var(--text-glow);
+      font-size: 2.7rem;
+      color: var(--neon-orange);
+      text-shadow: var(--text-glow), var(--neon-glow);
+      margin: 0 0 22px 0;
+      filter: blur(0.1px);
     }
-    .achievements-section ol {
-      margin-left: 1.2em;
-    }
-    .achievements-section li {
-      margin: 0 0 23px 0;
-      padding-left: 0.15em;
-    }
-    .achievements-section strong {
-      color: var(--neon-blue);
-      text-shadow: 0 0 9px #1ec8e988;
-    }
-    .achievements-section .conclusion {
-      display: block;
-      margin-top: 1.7em;
-      padding: 1em 1em 0.7em 1em;
-      background: rgba(255,174,71,0.12);
-      border-left: 4px solid var(--neon-orange);
-      font-size: 1.09em;
+    .hero-desc {
+      font-size: 1.25rem;
+      color: var(--warm-light);
+      background: rgba(0,0,0,0.23);
+      display: inline-block;
+      padding: 12px 28px;
       border-radius: 10px;
-      color: #ffeebb;
-      box-shadow: 0 1px 11px #ffb01413;
+      margin-bottom: 36px;
+      box-shadow: 0 0 22px #1119, 0 3px 16px #ffad4777;
+      text-align: center;
     }
-    @media (max-width:800px) {
-      .achievements-section { padding: 14px 5vw 14px 6vw; }
-      .achievements-section h2 { font-size: 1.3em;}
+    /* Máy móc & Nhân vật minh họa */
+    .visuals {
+      position: absolute;
+      width: 100vw;
+      left: 0; bottom: 0;
+      z-index: 0;
+      height: 270px;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .steam-engine, .factory, .gear-set {
+      position: absolute;
+      filter: drop-shadow(0 8px 32px #000d);
+      user-select: none;
+    }
+    .steam-engine {
+      left: 8%; bottom: 0; width: 130px;
+      animation: shake 8s infinite linear;
+      z-index: 2;
+    }
+    .factory {
+      right: 10%; bottom: 0; width: 200px;
+      filter: blur(0.2px) brightness(1.14);
+      z-index: 1;
+    }
+    .gear-set {
+      left: 28%; bottom: 24px; width: 58px;
+      z-index: 2;
+      animation: gearspin 12s infinite linear;
+    }
+    .hist-figure {
+      position: absolute; left: 67%;
+      bottom: 22px; width: 92px;
+      filter: drop-shadow(0 12px 58px #ffdd559a) contrast(1.09);
+      transition: filter 0.2s;
+      z-index: 3;
+      user-select: none;
+    }
+    @keyframes gearspin {
+      to { transform: rotate(1turn);}
+    }
+    @keyframes shake {
+      0%,100% {transform:translateY(1px);}
+      30% {transform:translateY(-5px);}
+      60% {transform:translateY(0);}
+    }
+
+    /* Timeline - focusable, điều hướng phím */
+    .timeline-overlay {
+      position: fixed;
+      bottom: 16px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--timeline-bg);
+      border-radius: 12px;
+      box-shadow: 0 3px 18px #000b;
+      padding: 11px 26px 11px 26px;
+      display: flex; align-items: center;
+      gap: 18px;
+      z-index: 20;
+      font-size: 1.04rem;
+      outline:none;
+    }
+    .timeline-overlay:focus-within, .timeline-overlay:focus-visible {
+      box-shadow: 0 0 0 3px var(--neon-blue), 0 3px 18px #2227;
+    }
+    .timeline-overlay .dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--neon-orange);
+      box-shadow: 0 0 12px var(--neon-orange), 0 2px 8px #000b;
+      display: inline-block;
+      margin-right: 8px;
+      border: 3px solid #fff3;
+      cursor: pointer;
+      outline:none;
+      transition: box-shadow 0.2s, background 0.2s;
+    }
+    .timeline-overlay .dot.active {
+      background: var(--neon-blue);
+      box-shadow: 0 0 16px var(--neon-blue), 0 2px 15px #00d8ff88;
+      border-color: #95f1ff;
+    }
+    .timeline-label {
+      color: #ffe9b3bb;
+      font-weight: 700;
+      min-width: 70px;
+      text-align: left;
+      transition: color 0.2s;
+      margin-left: .8em;
+      outline: none;
+    }
+
+    /* Infographic */
+    .infographic-section {
+      width: 90vw;
+      max-width: 700px;
+      margin: auto;
+      background: linear-gradient(120deg, #28304355, #191a23ee 100%);
+      border-radius: 14px;
+      padding: 26px;
+      box-shadow: 0 5px 32px #000a;
+      margin-bottom: 1.4em;
+      outline: none;
+    }
+    .infographic-section h2 {
+      color: var(--neon-blue);
+      font-family: var(--title-font);
+      text-shadow: var(--neon-glow);
+      margin-bottom: 13px;
+    }
+    .chart-container { margin-top:18px; }
+    canvas {
+      width: 100% !important; max-width: 600px;
+      background: #23262bee;
+      border-radius: 8px;
+      box-shadow: 0 0 13px #1ec8e938;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Parallax Demo */
+    .parallax-section {
+      width: 100vw; min-height: 70vh;
+      max-width: 750px;
+      background: linear-gradient(180deg, #23262b 70%, #191a23 120%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      margin: auto;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      outline: none;
+    }
+    .parallax-title {
+      font-family: var(--title-font);
+      color: var(--neon-orange);
+      font-size: 1.5rem;
+      text-shadow: var(--neon-glow);
+      margin-bottom: 8px;
+    }
+    .parallax-element {
+      width: 210px;
+      filter: blur(0.3px) drop-shadow(0 3px 21px #1ec8e988);
+      opacity: 0.84;
+      will-change: transform;
+      transition: transform 0.20s;
+      user-select: none;
+    }
+
+    .highlight { color: var(--neon-orange); text-shadow: var(--text-glow); font-weight: bold;}
+    .nav-keyhint {
+      color:var(--neon-blue); font-size:0.98em; margin-left:1em; opacity:0.7;
+      letter-spacing:1px
+    }
+    /* Accessibility & Responsive */
+    @media (max-width: 700px){
+      .hero-title { font-size: 1.45rem;}
+      .visuals .steam-engine, .visuals .factory, .visuals .gear-set, .hist-figure {width:60vw; max-width:120px;}
+      .infographic-section, .parallax-section { padding:14px 3vw;}
+      .timeline-label {min-width: 48px;}
+    }
+    @media (max-width: 420px){
+      canvas { max-width:97vw; }
     }
   </style>
 </head>
 <body tabindex="0">
 
-  <!-- [CÁC PHẦN SECTION CŨ GIỮ NGUYÊN] -->
-
-  <!-- Thành tựu nổi bật - Section mới -->
-  <div class="section" id="section-3" tabindex="-1">
-    <section class="achievements-section" tabindex="0">
-      <h2>Thành tựu nổi bật của Cách mạng Công nghiệp thế kỷ 19</h2>
-      <ol>
-        <li>
-          <strong>Phát minh và phổ biến máy hơi nước</strong><br>
-          Máy hơi nước do James Watt hoàn thiện, không chỉ là bước ngoặt cho lịch sử sản xuất mà còn mở ra thời đại mới trong vận tải và giao thông.<br>
-          Từ những đầu máy xe lửa hú vang trên các tuyến đường sắt trải dài khắp châu Âu, đến những con tàu hơi nước vượt Đại Tây Dương, hơi nước đã giúp rút ngắn khoảng cách, kết nối các thành phố, nền kinh tế và các dân tộc với nhau. Chính nhờ đó mà thương mại quốc tế phát triển mạnh mẽ hơn bao giờ hết.
-        </li>
-        <li>
-          <strong>Ra đời các ngành công nghiệp mới</strong><br>
-          Cách mạng Công nghiệp không chỉ nâng cao năng suất ngành dệt may – vốn là ngành đầu tiên ứng dụng máy móc quy mô lớn – mà còn tạo nên sự bùng nổ các ngành mới như luyện kim, sản xuất thép, cơ khí chế tạo máy và hóa chất. Một trong những thành tựu lớn là quy trình sản xuất thép Bessemer đã đưa ngành luyện kim sang trang mới, cho phép xây dựng cầu đường, nhà cao tầng, tàu biển cỡ lớn và vũ khí hiện đại.
-        </li>
-        <li>
-          <strong>Phát triển hệ thống giao thông vận tải</strong><br>
-          Tuyến đường sắt xuyên quốc gia đầu tiên, tàu hỏa tốc độ cao, cảng biển công nghiệp hiện đại cùng cáp điện báo nối liền lục địa đã trở thành biểu tượng của thời đại mới. Sự phát triển này thúc đẩy luân chuyển hàng hóa, nguyên liệu, nhân lực và tri thức nhanh chóng, góp phần hình thành thị trường trong nước và liên kết thị trường quốc tế.
-        </li>
-        <li>
-          <strong>Tiến bộ vượt bậc trong khoa học – kỹ thuật</strong><br>
-          Nhiều phát kiến nổi bật xuất hiện như phát minh bóng đèn điện của Thomas Edison, máy điện tín của Samuel Morse, máy phát điện Dynamo, máy khâu Singer, động cơ đốt trong… Những tiến bộ này không chỉ làm thay đổi phương thức sản xuất mà còn cải thiện điều kiện sống, mở đường cho các tiến bộ khoa học thế kỷ XX.
-        </li>
-        <li>
-          <strong>Hình thành thành phố công nghiệp và tầng lớp xã hội mới</strong><br>
-          Nhiều thành phố công nghiệp lớn ra đời, tập trung đông đảo công nhân, kỹ sư, nhà khoa học và thương nhân. Sự xuất hiện tầng lớp công nhân công nghiệp, giai cấp tư sản công nghiệp mới đã kéo theo những biến đổi xã hội sâu sắc về cơ cấu, nhận thức, ý thức chính trị và quyền lợi xã hội – tiền đề cho các phong trào đấu tranh đòi quyền tự do, dân chủ và cải cách lao động.
-        </li>
-        <li>
-          <strong>Thúc đẩy tiến trình đô thị hóa và toàn cầu hóa</strong><br>
-          Nhịp sống đô thị tăng tốc, các thành phố mở rộng với quy hoạch mới, hệ thống cơ sở hạ tầng hiện đại (đèn đường điện, cấp nước, vệ sinh, phương tiện công cộng…). Đồng thời, thương mại, vốn, khoa học kỹ thuật và lao động di chuyển mạnh mẽ giữa các khu vực. Từ đó, các nền kinh tế thế giới chịu ảnh hưởng, gắn kết và phụ thuộc lẫn nhau, khởi nguồn của toàn cầu hóa sau này.
-        </li>
-        <li>
-          <strong>Nâng cao chất lượng đời sống và ý thức cá nhân</strong><br>
-          Nhờ máy móc và sản xuất quy mô lớn, hàng tiêu dùng phổ thông trở nên rẻ và dễ tiếp cận hơn: vải vóc, quần áo, đồ gia dụng, thực phẩm chế biến sẵn… Điều kiện y tế, chăm sóc sức khỏe, giáo dục cải thiện rõ rệt. Con người ý thức mạnh mẽ hơn về vai trò cá nhân, quyền được sống, lao động, sáng tạo và được bảo vệ trước pháp luật.
-        </li>
-        <li>
-          <strong>Đặt nền móng cho những cuộc cách mạng khoa học và công nghệ tiếp theo</strong><br>
-          Tất cả những tiến bộ vượt bậc trong sản xuất vật chất, khoa học kỹ thuật, tổ chức xã hội của thế kỷ 19 đã tạo tiền đề cho các cuộc “Cách mạng Công nghiệp lần thứ hai, ba và bốn” trong thế kỷ 20 và 21, định hình thế giới hiện đại với công nghệ số, tự động hóa, năng lượng mới.
-        </li>
-      </ol>
-      <span class="conclusion">
-        <b>Kết luận:</b><br>
-        Cách mạng Công nghiệp không chỉ là thành tựu vĩ đại của riêng châu Âu mà còn tạo động lực thay đổi toàn cầu, đặt nền móng cho xã hội hiện đại, công nghệ phát triển, và mang lại những giá trị con người lớn lao còn lan tỏa đến tận ngày nay.
-      </span>
-    </section>
+  <div class="section active" id="section-0">
+    <div class="hero-title">Cách mạng Công nghiệp thời hiện đại</div>
+    <div class="hero-desc">
+      Khám phá thời kỳ chuyển mình thế kỷ 19 với <span class="highlight">máy hơi nước</span>,
+      <span class="highlight">nhà máy</span>, <span class="highlight">bánh răng quay</span>,
+      cùng các nhân vật lịch sử làm thay đổi thế giới, qua góc nhìn <b>điện ảnh bán thực tế</b>.<br>
+      <span class="nav-keyhint">[Mũi Tên Xuống/→] để chuyển tiếp</span>
+    </div>
+    <div class="visuals">
+      <img src="https://img.icons8.com/color/512/steam-engine.png" alt="Steam Engine" class="steam-engine" />
+      <img src="https://img.icons8.com/ios-filled/500/factory.png" alt="Factory" class="factory" />
+      <img src="https://img.icons8.com/fluency/512/gear.png" alt="Gear Set" class="gear-set" style="animation-delay: -1s;" />
+    </div>
+    <img src="https://img.icons8.com/ios/256/napoleon-bonaparte.png" alt="Lịch sử nhân vật" class="hist-figure" />
   </div>
 
-  <!-- Timeline - cập nhật điều hướng -->
+  <div class="section" id="section-1" tabindex="-1">
+    <div class="infographic-section" id="chartSection" tabindex="0">
+      <h2>Biểu đồ phát triển công nghiệp (thế kỷ 19)</h2>
+      <div class="chart-container">
+        <canvas id="industryChart" width="620" height="220" tabindex="-1"></canvas>
+      </div>
+      <div class="nav-keyhint">[↑/←] phần trước &nbsp; | &nbsp; [↓/→] tiếp theo</div>
+    </div>
+  </div>
+
+  <div class="section" id="section-2" tabindex="-1">
+    <div class="parallax-section" id="parallax-demo" tabindex="0">
+      <div class="parallax-title">Hiệu ứng Parallax động</div>
+      <img src="https://img.icons8.com/fluency/512/fire.png" alt="Khói động" class="parallax-element" tabindex="-1"/>
+      <span style="color: #ffd6a0; font-size:1rem;margin-top:10px;">
+        Dùng [Mũi tên] để qua lại trang, hoặc nhấn TAB, Enter để vào timeline dưới.
+      </span>
+    </div>
+  </div>
+
+  <!-- Timeline điều hướng, focusable -->
   <nav class="timeline-overlay" role="navigation" aria-label="Timeline lịch sử" tabindex="0">
     <button class="dot active" aria-label="Bối cảnh" tabindex="0" data-target="section-0"></button>
     <button class="dot" aria-label="Biểu đồ CN" tabindex="0" data-target="section-1"></button>
     <button class="dot" aria-label="Parallax" tabindex="0" data-target="section-2"></button>
-    <button class="dot" aria-label="Thành tựu" tabindex="0" data-target="section-3"></button>
     <span class="timeline-label" id="timeline-label" tabindex="0">Bối cảnh</span>
   </nav>
 
-  <!-- ... [PHẦN SCRIPT KHÔNG ĐỔI, chỉ cập nhật số slide] ... -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     // Section navigation
@@ -138,7 +297,7 @@
       });
       // timeline update
       timelineDots.forEach((d,i)=>d.classList.toggle('active',i===idx));
-      timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax","Thành tựu"][idx];
+      timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax"][idx];
       current = idx;
     }
     // Keyboard navigation
@@ -153,7 +312,7 @@
         e.preventDefault();
       }
       if(e.key==="Tab"){
-        // focus timeline nếu ở cuối
+        // focus timeline if reach bottom
         if(current===sections.length-1){
           document.querySelector('.timeline-overlay').focus();
           e.preventDefault();
@@ -167,7 +326,7 @@
     timelineDots.forEach((dot,i)=>{
       dot.onclick = ()=> activateSection(i);
       dot.onkeyup = (e)=>{ if(e.key==='Enter'||e.key===" ")activateSection(i);}
-      dot.onfocus = ()=> timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax","Thành tựu"][i];
+      dot.onfocus = ()=> timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax"][i];
     });
     document.querySelector('.timeline-overlay').onkeyup = function(e){
       // Left/Right khi focus trên timeline
