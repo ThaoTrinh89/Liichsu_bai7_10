@@ -24,38 +24,58 @@
             color: var(--color-text);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            /* Thêm padding top cho body để tránh bị thanh nav cố định che mất nội dung */
+            padding-top: 5rem; 
+        }
+        
+        /* CSS cho Menu Điều hướng Cố định */
+        #sticky-nav {
+            background-color: rgba(15, 23, 42, 0.95); /* Slate 900 mờ */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 50; /* Đảm bảo nav nằm trên các section */
+        }
+        .nav-button {
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px; /* rounded-full */
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav-button:hover {
+            background-color: var(--color-primary);
+            color: white;
         }
 
         /* Hiệu ứng Accordion/Toggle MỚI */
         .accordion-header {
             cursor: pointer;
             padding: 1.5rem;
-            border-radius: 0.75rem; /* Góc bo lớn hơn */
+            border-radius: 0.75rem; 
             transition: background-color 0.3s ease, box-shadow 0.3s ease, border-left 0.3s ease;
             position: relative;
             z-index: 10;
-            border-left: 5px solid transparent; /* Tạo đường viền trái nổi bật */
+            border-left: 5px solid transparent; 
         }
         .accordion-header:hover {
-            background-color: #1e293b; /* Slate 800 hover */
-            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2); /* Bóng đổ cam mờ */
+            background-color: #1e293b; 
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.2); 
         }
 
         /* Thiết lập màu tiêu đề (Chung) */
         .accordion-header h2 {
             font-weight: 700;
-            letter-spacing: 0.05em; /* Tăng khoảng cách chữ */
+            letter-spacing: 0.05em; 
             transition: color 0.3s;
         }
 
         /* Phong cách Icon */
         .accordion-header span {
-            font-size: 2.5rem; /* Kích thước lớn hơn */
-            font-weight: 200; /* Nhẹ hơn */
+            font-size: 2.5rem; 
+            font-weight: 200; 
             transition: transform 0.3s, font-weight 0.3s;
         }
         .accordion-header:hover span {
-            font-weight: 700; /* Đậm hơn khi hover */
+            font-weight: 700; 
         }
 
         /* Màu sắc theo từng phần */
@@ -80,7 +100,7 @@
         }
 
 
-        /* Phong cách Điện ảnh / Glow / Bokeh */
+        /* Phong cách Điện ảnh / Glow / Bokeh - giữ nguyên */
         .hero-bg-overlay {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(249, 115, 22, 0.1));
             backdrop-filter: blur(5px);
@@ -90,95 +110,7 @@
             text-shadow: 0 0 10px var(--color-secondary), 0 0 20px rgba(59, 130, 246, 0.5);
         }
 
-        /* Mô phỏng Bokeh và Motion Blur giữ nguyên */
-        .bokeh-dot {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle at center, rgba(249, 115, 22, 0.5) 0%, rgba(249, 115, 22, 0) 70%);
-            border-radius: 50%;
-            animation: bokeh-float 15s infinite alternate ease-in-out;
-            opacity: 0.5;
-            z-index: 10;
-        }
-        .bokeh-dot:nth-child(1) { top: 10%; left: 5%; transform: scale(1.5); animation-delay: 1s; }
-        .bokeh-dot:nth-child(2) { bottom: 20%; right: 10%; animation-delay: 3s; }
-        .bokeh-dot:nth-child(3) { top: 50%; left: 30%; transform: scale(0.8); animation-delay: 5s; }
-        .bokeh-dot:nth-child(4) { bottom: 5%; left: 60%; transform: scale(1.2); animation-delay: 7s; }
-
-        @keyframes bokeh-float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(20px, 30px) scale(1.1); }
-        }
-
-        .motion-blur-image {
-            transition: filter 0.3s ease-out;
-            filter: blur(1px) contrast(1.1);
-            transform: scale(1.05);
-        }
-        .motion-blur-image:hover {
-            filter: blur(0px) contrast(1);
-            transform: scale(1);
-        }
-
-        /* Timeline Tương tác và Hover Blur giữ nguyên */
-        .timeline-item {
-            position: relative;
-            padding: 0 20px 20px 60px;
-            border-left: 2px solid var(--color-secondary);
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -10px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--color-primary);
-            border: 4px solid var(--color-bg);
-            transition: all 0.3s ease;
-        }
-        .timeline-item:hover::before {
-            transform: scale(1.2);
-            background-color: var(--color-secondary);
-        }
-        
-        .gallery-item-img {
-            transition: filter 0.5s ease;
-        }
-        .gallery-item:hover .gallery-item-img {
-            filter: blur(3px) brightness(0.7);
-        }
-        .gallery-item-text {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        .gallery-item:hover .gallery-item-text {
-            opacity: 1;
-        }
-
-        /* CSS cho Parallax sections (nền mới) */
-        .bg-parallax-1 {
-            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=GEAR+FACTORY'); 
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-        }
-        .bg-parallax-2 {
-            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=STEAM+ENGINE+DETAIL'); 
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-        }
-        .bg-parallax-3 {
-            background-image: url('https://placehold.co/1920x1080/1a202c/aaaaaa?text=INDUSTRIAL+TIMELINE'); 
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* CSS cho Quiz rút gọn & Đáp án */
+        /* CSS cho Quiz rút gọn & Đáp án - giữ nguyên */
         .quiz-option-btn {
             padding: 8px 12px;
             margin: 4px;
@@ -190,20 +122,17 @@
             flex-shrink: 0;
             text-align: center;
         }
-        /* Đã chọn (trước khi nộp) */
         .quiz-option-btn.selected {
-            background-color: #3b82f6; /* blue-500 */
+            background-color: #3b82f6; 
             border-color: #3b82f6;
         }
-        /* Đáp án Đúng (sau khi nộp) */
         .quiz-option-btn.correct {
-            background-color: #10b981; /* green-500 */
+            background-color: #10b981; 
             border-color: #10b981;
             font-weight: bold;
         }
-        /* Đáp án Sai người dùng chọn (sau khi nộp) */
         .quiz-option-btn.incorrect {
-            background-color: #f97316; /* orange-600 */
+            background-color: #f97316; 
             border-color: #f97316;
             text-decoration: line-through;
         }
@@ -211,6 +140,14 @@
 </head>
 <body class="selection:bg-orange-600 selection:text-white">
 
+    <nav id="sticky-nav" class="fixed top-0 left-0 right-0 py-4">
+        <div class="container mx-auto px-4 max-w-6xl flex justify-center space-x-4 overflow-x-auto">
+            <a href="#summary" class="nav-button bg-slate-700 text-orange-400 hover:text-white">📚 Tóm Tắt</a>
+            <a href="#timeline-section" class="nav-button bg-slate-700 text-blue-400 hover:text-white">⏳ Dòng Thời Gian</a>
+            <a href="#gallery-section" class="nav-button bg-slate-700 text-orange-400 hover:text-white">🖼️ Hình Ảnh</a>
+            <a href="#quiz-section" class="nav-button bg-slate-700 text-blue-400 hover:text-white">✅ Quiz</a>
+        </div>
+    </nav>
     <header class="relative h-[60vh] md:h-[80vh] overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center motion-blur-image" style="background-image: url('https://placehold.co/1920x1080/0f172a/f97316/svg?text=Industrial+Revolution+Header');">
             <div class="bokeh-dot"></div>
@@ -227,12 +164,14 @@
                 Bài 7: Cách mạng Công nghiệp Thời hiện đại (Cuối XIX - Đầu XX)
             </p>
             <div class="mt-8">
-                <a href="#main-content" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-xl shadow-orange-500/50">
+                <a href="#main-content-start" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-xl shadow-orange-500/50">
                     Bắt đầu bài học &darr;
                 </a>
             </div>
         </div>
     </header>
+
+    <div id="main-content-start"></div>
 
     <main id="main-content" class="container mx-auto px-4 py-16 max-w-6xl space-y-8">
         
@@ -500,7 +439,7 @@
                 // TỰ ĐỘNG CUỘN ĐẾN ĐÂY
                 section.scrollIntoView({ 
                     behavior: 'smooth', 
-                    block: 'start' // Cuộn để tiêu đề nằm ở trên cùng (hoặc gần trên cùng)
+                    block: 'start' 
                 });
 
             } else {
