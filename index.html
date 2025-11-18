@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<div class="section" id="section-2" tabindex="-1">
+    <div class="parallax-section" id="parallax<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <title>Cách mạng Công nghiệp - Lịch sử 10 | Bài 7</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:;">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap">
   <style>
@@ -38,6 +40,9 @@
       opacity: 0;
       transform: scale(0.98) translateY(60px);
       pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
     .section.active {
       opacity: 1;
@@ -65,7 +70,6 @@
       box-shadow: 0 0 22px #1119, 0 3px 16px #ffad4777;
       text-align: center;
     }
-    /* Máy móc & Nhân vật minh họa */
     .visuals {
       position: absolute;
       width: 100vw;
@@ -85,6 +89,9 @@
       animation: shake 8s infinite linear;
       z-index: 2;
     }
+    .ending-section .steam-engine {
+      animation: shake 8s infinite linear;
+    }
     .factory {
       right: 10%; bottom: 0; width: 200px;
       filter: blur(0.2px) brightness(1.14);
@@ -93,6 +100,9 @@
     .gear-set {
       left: 28%; bottom: 24px; width: 58px;
       z-index: 2;
+      animation: gearspin 12s infinite linear;
+    }
+    .ending-section .gear-set {
       animation: gearspin 12s infinite linear;
     }
     .hist-figure {
@@ -112,7 +122,6 @@
       60% {transform:translateY(0);}
     }
 
-    /* Timeline - focusable, điều hướng phím */
     .timeline-overlay {
       position: fixed;
       bottom: 16px; left: 50%;
@@ -156,7 +165,6 @@
       outline: none;
     }
 
-    /* Infographic */
     .infographic-section {
       width: 90vw;
       max-width: 700px;
@@ -184,7 +192,6 @@
       margin: 0 auto;
     }
 
-    /* Parallax Demo */
     .parallax-section {
       width: 100vw; min-height: 70vh;
       max-width: 750px;
@@ -218,7 +225,201 @@
       color:var(--neon-blue); font-size:0.98em; margin-left:1em; opacity:0.7;
       letter-spacing:1px
     }
-    /* Accessibility & Responsive */
+    .click-area {
+      position: fixed;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      z-index: 10;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .click-area:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .click-left {
+      left: 0;
+    }
+    .click-right {
+      right: 0;
+    }
+    .click-hint {
+      position: absolute;
+      bottom: 50%;
+      font-size: 2rem;
+      color: var(--neon-blue);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      text-shadow: 0 0 10px var(--neon-blue);
+    }
+    .click-area:hover .click-hint {
+      opacity: 0.6;
+    }
+    .click-left .click-hint {
+      left: 20px;
+    }
+    .click-right .click-hint {
+      right: 20px;
+    }
+    .visual-click {
+      cursor: pointer;
+      transition: transform 0.3s, filter 0.3s;
+    }
+    .visual-click:hover {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 20px var(--neon-orange)) brightness(1.3);
+    }
+    .visual-click:active {
+      transform: scale(0.95);
+    }
+    .chart-container canvas {
+      cursor: pointer;
+    }
+    .timeline-overlay .dot {
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .timeline-overlay .dot:hover {
+      transform: scale(1.25);
+    }
+    .timeline-overlay .dot:active {
+      transform: scale(0.9);
+    }
+    .ending-section {
+      background: linear-gradient(135deg, #1a1d2e 0%, #2d1b3d 50%, #1a1d2e 100%);
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+    .ending-section .visuals {
+      position: absolute;
+      width: 100vw;
+      left: 0;
+      bottom: 0;
+      z-index: 0;
+      height: 270px;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .ending-section .steam-engine,
+    .ending-section .factory,
+    .ending-section .gear-set,
+    .ending-section .hist-figure {
+      pointer-events: auto;
+    }
+    .ending-content {
+      position: relative;
+      z-index: 5;
+    }
+    .ending-title {
+      font-family: var(--title-font);
+      font-size: 3rem;
+      color: var(--neon-orange);
+      text-shadow: var(--neon-glow);
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+    .ending-subtitle {
+      font-size: 1.3rem;
+      color: var(--warm-light);
+      margin-bottom: 30px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+    .ending-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin: 40px 0;
+    }
+    .stat-box {
+      background: rgba(30, 200, 233, 0.1);
+      border: 2px solid var(--neon-blue);
+      border-radius: 12px;
+      padding: 20px 30px;
+      min-width: 150px;
+      animation: fadeInUp 1.4s ease-out;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .stat-box:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px var(--neon-blue);
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      color: var(--neon-orange);
+      font-weight: bold;
+      text-shadow: var(--neon-glow);
+    }
+    .stat-label {
+      font-size: 1rem;
+      color: var(--warm-light);
+      margin-top: 5px;
+    }
+    .ending-quote {
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--neon-blue);
+      margin: 40px auto;
+      max-width: 700px;
+      padding: 20px;
+      border-left: 4px solid var(--neon-orange);
+      background: rgba(0,0,0,0.3);
+      animation: fadeInUp 1.6s ease-out;
+    }
+    .ending-cta {
+      margin-top: 40px;
+      animation: fadeInUp 1.8s ease-out;
+    }
+    .restart-btn {
+      background: linear-gradient(135deg, var(--neon-orange), var(--neon-blue));
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      padding: 15px 40px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 5px 20px rgba(255, 173, 71, 0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-family: var(--title-font);
+    }
+    .restart-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 40px rgba(30, 200, 233, 0.8);
+    }
+    .restart-btn:active {
+      transform: scale(0.95);
+    }
+    .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: firework 1.5s ease-out infinite;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes firework {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--x), var(--y)) scale(0);
+      }
+    }
     @media (max-width: 700px){
       .hero-title { font-size: 1.45rem;}
       .visuals .steam-engine, .visuals .factory, .visuals .gear-set, .hist-figure {width:60vw; max-width:120px;}
@@ -232,20 +433,28 @@
 </head>
 <body tabindex="0">
 
+  <!-- Click navigation areas -->
+  <div class="click-area click-left" id="clickPrev">
+    <div class="click-hint">←</div>
+  </div>
+  <div class="click-area click-right" id="clickNext">
+    <div class="click-hint">→</div>
+  </div>
+
   <div class="section active" id="section-0">
     <div class="hero-title">Cách mạng Công nghiệp thời hiện đại</div>
     <div class="hero-desc">
       Khám phá thời kỳ chuyển mình thế kỷ 19 với <span class="highlight">máy hơi nước</span>,
       <span class="highlight">nhà máy</span>, <span class="highlight">bánh răng quay</span>,
       cùng các nhân vật lịch sử làm thay đổi thế giới, qua góc nhìn <b>điện ảnh bán thực tế</b>.<br>
-      <span class="nav-keyhint">[Mũi Tên Xuống/→] để chuyển tiếp</span>
+      <span class="nav-keyhint">[Nhấp chuột trái/phải] hoặc [Mũi Tên] để chuyển tiếp</span>
     </div>
     <div class="visuals">
-      <img src="https://img.icons8.com/color/512/steam-engine.png" alt="Steam Engine" class="steam-engine" />
-      <img src="https://img.icons8.com/ios-filled/500/factory.png" alt="Factory" class="factory" />
-      <img src="https://img.icons8.com/fluency/512/gear.png" alt="Gear Set" class="gear-set" style="animation-delay: -1s;" />
+      <img src="https://img.icons8.com/color/512/steam-engine.png" alt="Steam Engine" class="steam-engine visual-click" />
+      <img src="https://img.icons8.com/ios-filled/500/factory.png" alt="Factory" class="factory visual-click" />
+      <img src="https://img.icons8.com/fluency/512/gear.png" alt="Gear Set" class="gear-set visual-click" style="animation-delay: -1s;" />
     </div>
-    <img src="https://img.icons8.com/ios/256/napoleon-bonaparte.png" alt="Lịch sử nhân vật" class="hist-figure" />
+    <img src="https://img.icons8.com/ios/256/napoleon-bonaparte.png" alt="Lịch sử nhân vật" class="hist-figure visual-click" />
   </div>
 
   <div class="section" id="section-1" tabindex="-1">
@@ -261,27 +470,63 @@
   <div class="section" id="section-2" tabindex="-1">
     <div class="parallax-section" id="parallax-demo" tabindex="0">
       <div class="parallax-title">Hiệu ứng Parallax động</div>
-      <img src="https://img.icons8.com/fluency/512/fire.png" alt="Khói động" class="parallax-element" tabindex="-1"/>
+      <img src="https://img.icons8.com/fluency/512/fire.png" alt="Khói động" class="parallax-element visual-click" tabindex="-1"/>
       <span style="color: #ffd6a0; font-size:1rem;margin-top:10px;">
-        Dùng [Mũi tên] để qua lại trang, hoặc nhấn TAB, Enter để vào timeline dưới.
+        Nhấp vào hình ảnh hoặc dùng [Mũi tên] để điều khiển
       </span>
     </div>
   </div>
 
-  <!-- Timeline điều hướng, focusable -->
+  <div class="section ending-section" id="section-3" tabindex="-1">
+    <div class="ending-content">
+      <div class="ending-title">Kết thúc hành trình</div>
+      <div class="ending-subtitle">Cách mạng Công nghiệp đã thay đổi thế giới mãi mãi</div>
+      
+      <div class="ending-stats">
+        <div class="stat-box">
+          <div class="stat-number">1760</div>
+          <div class="stat-label">Năm bắt đầu</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100+</div>
+          <div class="stat-label">Năm biến đổi</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Tác động lâu dài</div>
+        </div>
+      </div>
+
+      <div class="ending-quote">
+        "Máy móc không thay thế con người, mà giúp con người vươn xa hơn trong hành trình tiến hóa của nền văn minh."
+      </div>
+
+      <div class="ending-cta">
+        <button class="restart-btn" onclick="activateSection(0)">🔄 Xem lại từ đầu</button>
+      </div>
+    </div>
+
+    <div class="visuals">
+      <img src="https://img.icons8.com/color/512/steam-engine.png" alt="Steam Engine" class="steam-engine visual-click" />
+      <img src="https://img.icons8.com/ios-filled/500/factory.png" alt="Factory" class="factory visual-click" />
+      <img src="https://img.icons8.com/fluency/512/gear.png" alt="Gear Set" class="gear-set visual-click" style="animation-delay: -1s;" />
+    </div>
+    <img src="https://img.icons8.com/ios/256/napoleon-bonaparte.png" alt="Lịch sử nhân vật" class="hist-figure visual-click" />
+  </div>
+
   <nav class="timeline-overlay" role="navigation" aria-label="Timeline lịch sử" tabindex="0">
     <button class="dot active" aria-label="Bối cảnh" tabindex="0" data-target="section-0"></button>
     <button class="dot" aria-label="Biểu đồ CN" tabindex="0" data-target="section-1"></button>
     <button class="dot" aria-label="Parallax" tabindex="0" data-target="section-2"></button>
+    <button class="dot" aria-label="Kết thúc" tabindex="0" data-target="section-3"></button>
     <span class="timeline-label" id="timeline-label" tabindex="0">Bối cảnh</span>
   </nav>
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script>
-    // Section navigation
     const sections = [...document.querySelectorAll('.section')];
     let current = 0;
+    
     function activateSection(idx) {
       if (idx<0||idx>=sections.length) return;
       sections.forEach((s,i)=>{
@@ -295,14 +540,59 @@
           s.setAttribute('tabindex','-1');
         }
       });
-      // timeline update
       timelineDots.forEach((d,i)=>d.classList.toggle('active',i===idx));
-      timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax"][idx];
+      timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax","Kết thúc"][idx];
       current = idx;
     }
+    
+    // Click navigation
+    document.getElementById('clickPrev').onclick = ()=> {
+      if(current>0) activateSection(current-1);
+    };
+    document.getElementById('clickNext').onclick = ()=> {
+      if(current<sections.length-1) activateSection(current+1);
+    };
+    
+    // Interactive visuals - click to animate
+    document.querySelectorAll('.visual-click').forEach(el => {
+      el.onclick = (e) => {
+        e.stopPropagation();
+        el.style.animation = 'none';
+        setTimeout(() => {
+          if(el.classList.contains('gear-set')) {
+            el.style.animation = 'gearspin 2s linear';
+          } else if(el.classList.contains('steam-engine')) {
+            el.style.animation = 'shake 1s linear';
+          } else if(el.classList.contains('parallax-element')) {
+            el.style.transform = 'rotate(360deg) scale(1.2)';
+            setTimeout(() => {
+              el.style.transform = 'translateX(' + pOffset + 'px) scale(1.05)';
+            }, 500);
+          } else {
+            el.style.transform = 'scale(1.3) rotate(5deg)';
+            setTimeout(() => {
+              el.style.transform = 'scale(1)';
+            }, 300);
+          }
+        }, 10);
+      };
+    });
+    
+    // Chart click interaction
+    let chartClickCount = 0;
+    document.getElementById('industryChart').onclick = (e) => {
+      e.stopPropagation();
+      chartClickCount++;
+      if(chartClickCount % 2 === 0) {
+        e.target.style.filter = 'hue-rotate(180deg)';
+      } else {
+        e.target.style.filter = 'hue-rotate(0deg)';
+      }
+    };
+    
     // Keyboard navigation
     window.addEventListener('keydown',e=>{
-      if(document.activeElement.tagName==="CANVAS") return; // Skip typing in chart
+      if(document.activeElement.tagName==="CANVAS") return;
       if(['ArrowDown','ArrowRight','PageDown'].includes(e.key)){
         if(current<sections.length-1){activateSection(current+1);}
         e.preventDefault();
@@ -312,7 +602,6 @@
         e.preventDefault();
       }
       if(e.key==="Tab"){
-        // focus timeline if reach bottom
         if(current===sections.length-1){
           document.querySelector('.timeline-overlay').focus();
           e.preventDefault();
@@ -320,16 +609,14 @@
       }
     });
 
-    // Timeline nav with keyboard & mouse
     const timelineDots = [...document.querySelectorAll('.timeline-overlay .dot')];
     const timelineLabel = document.getElementById('timeline-label');
     timelineDots.forEach((dot,i)=>{
       dot.onclick = ()=> activateSection(i);
       dot.onkeyup = (e)=>{ if(e.key==='Enter'||e.key===" ")activateSection(i);}
-      dot.onfocus = ()=> timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax"][i];
+      dot.onfocus = ()=> timelineLabel.textContent = ["Bối cảnh","Biểu đồ CN","Parallax","Kết thúc"][i];
     });
     document.querySelector('.timeline-overlay').onkeyup = function(e){
-      // Left/Right khi focus trên timeline
       let dotIdx = timelineDots.findIndex(d=>d===document.activeElement);
       if(e.key==="ArrowLeft" && dotIdx>0){
         timelineDots[dotIdx-1].focus();e.preventDefault();}
@@ -337,39 +624,39 @@
         timelineDots[dotIdx+1].focus();e.preventDefault();}
     }
 
-    // Chart demo
-    new Chart(document.getElementById('industryChart').getContext('2d'), {
-      type:"line",
-      data:{
-        labels:["1800","1820","1840","1860","1880","1900"],
-        datasets:[
-          {
-            label:"Tổng sản lượng công nghiệp (tỉ chỉ số)",
-            data:[40,98,310,900,1620,2170],
-            backgroundColor:"rgba(30,200,233,0.19)",
-            borderColor:"#1ec8e9",
-            pointBackgroundColor:"#ffad47",
-            borderWidth: 3,
-            tension: 0.4,
-            pointRadius: 4,
-            fill:true
-          }
-        ]
-      },
-      options:{
-        plugins:{
-          legend:{labels:{color:"rgba(255,235,180,0.92)",font:{size:14}}},
+    window.addEventListener('load', function() {
+      new Chart(document.getElementById('industryChart').getContext('2d'), {
+        type:"line",
+        data:{
+          labels:["1800","1820","1840","1860","1880","1900"],
+          datasets:[
+            {
+              label:"Tổng sản lượng công nghiệp (tỉ chỉ số)",
+              data:[40,98,310,900,1620,2170],
+              backgroundColor:"rgba(30,200,233,0.19)",
+              borderColor:"#1ec8e9",
+              pointBackgroundColor:"#ffad47",
+              borderWidth: 3,
+              tension: 0.4,
+              pointRadius: 4,
+              fill:true
+            }
+          ]
         },
-        scales:{
-          x:{ticks:{color:"#ffdcb4",font:{size:12}}},
-          y:{ticks:{color:"#f7f7f7"},grid:{color:"#1ec8e944"}}
-        },
-        responsive:true,
-        maintainAspectRatio:false
-      }
+        options:{
+          plugins:{
+            legend:{labels:{color:"rgba(255,235,180,0.92)",font:{size:14}}},
+          },
+          scales:{
+            x:{ticks:{color:"#ffdcb4",font:{size:12}}},
+            y:{ticks:{color:"#f7f7f7"},grid:{color:"#1ec8e944"}}
+          },
+          responsive:true,
+          maintainAspectRatio:false
+        }
+      });
     });
 
-    // Parallax effect: dùng mũi tên
     const pElem=document.querySelector('.parallax-element');
     let pOffset=0;
     window.addEventListener('keydown',e=>{
