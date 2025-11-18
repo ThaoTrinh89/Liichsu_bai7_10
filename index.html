@@ -478,7 +478,7 @@
         });
 
         // ===============================================
-        // CHỨC NĂNG ACCORDION/TOGGLE
+        // CHỨC NĂNG ACCORDION/TOGGLE VÀ TỰ ĐỘNG CUỘN
         // ===============================================
         
         function toggleAccordion(event) {
@@ -496,6 +496,13 @@
             if (content.classList.contains('active')) {
                 icon.style.transform = 'rotate(45deg)'; 
                 icon.textContent = '×';
+                
+                // TỰ ĐỘNG CUỘN ĐẾN ĐÂY
+                section.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' // Cuộn để tiêu đề nằm ở trên cùng (hoặc gần trên cùng)
+                });
+
             } else {
                 icon.style.transform = 'rotate(0deg)';
                 icon.textContent = '+';
