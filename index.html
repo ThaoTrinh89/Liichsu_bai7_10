@@ -3,442 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài 7: Cách mạng công nghiệp thời hiện đại</title>
+    <title>Bài 7: Cách mạng Công nghiệp Hiện đại - Lịch sử 10</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        .pulse-animation { animation: pulse 2s infinite; }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .bounce-animation { animation: bounce 2s infinite; }
-
-        /* Thêm hiệu ứng blur motion */
-        .blur-motion {
-            transition: filter 0.2s ease-out, opacity 0.2s ease-out; 
+        /* Thiết lập màu sắc theo yêu cầu: Nền tối, Blue/Orange nổi bật */
+        :root {
+            --color-primary: #f97316; /* Cam */
+            --color-secondary: #3b82f6; /* Xanh dương */
+            --color-bg: #0f172a; /* Slate 900 - Nền tối */
+            --color-text: #f1f5f9; /* Slate 100 */
         }
 
-        /* Áp dụng blur khi cuộn */
-        .is-scrolling {
-            filter: blur(1.5px); 
-            opacity: 0.95; 
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
         }
 
-        .hidden { display: none !important; }
+        /* 1. Phong cách Điện ảnh / Glow / Bokeh */
+        .hero-bg-overlay {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(249, 115, 22, 0.1));
+            backdrop-filter: blur(5px);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 10px var(--color-secondary), 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Mô phỏng Bokeh - Các chấm sáng mờ */
+        .bokeh-dot {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at center, rgba(249, 115, 22, 0.5) 0%, rgba(249, 115, 22, 0) 70%);
+            border-radius: 50%;
+            animation: bokeh-float 15s infinite alternate ease-in-out;
+            opacity: 0.5;
+            z-index: 10;
+        }
+        .bokeh-dot:nth-child(1) { top: 10%; left: 5%; transform: scale(1.5); animation-delay: 1s; }
+        .bokeh-dot:nth-child(2) { bottom: 20%; right: 10%; animation-delay: 3s; }
+        .bokeh-dot:nth-child(3) { top: 50%; left: 30%; transform: scale(0.8); animation-delay: 5s; }
+        .bokeh-dot:nth-child(4) { bottom: 5%; left: 60%; transform: scale(1.2); animation-delay: 7s; }
+
+        @keyframes bokeh-float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, 30px) scale(1.1); }
+        }
+
+        /* 2. Hiệu ứng Motion Blur cho Header Image */
+        .motion-blur-image {
+            transition: filter 0.3s ease-out;
+            filter: blur(1px) contrast(1.1); /* Blur nhẹ mặc định */
+            transform: scale(1.05); /* Zoom nhẹ để tạo cảm giác động */
+        }
+        .motion-blur-image:hover {
+            filter: blur(0px) contrast(1); /* Mất blur khi hover */
+            transform: scale(1);
+        }
+
+        /* 3. Timeline Tương tác */
+        .timeline-item {
+            position: relative;
+            padding: 0 20px 20px 60px;
+            border-left: 2px solid var(--color-secondary);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            border: 4px solid var(--color-bg);
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover::before {
+            transform: scale(1.2);
+            background-color: var(--color-secondary);
+        }
         
-        html { scroll-behavior: smooth; }
-        
-        .active-nav { background-color: white; color: #2563eb; }
+        /* 4. Parallax Effect cho Main Content */
+        .parallax-section {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* 5. Hover Blur cho Gallery */
+        .gallery-item-img {
+            transition: filter 0.5s ease;
+        }
+        .gallery-item:hover .gallery-item-img {
+            filter: blur(3px) brightness(0.7);
+        }
+        .gallery-item-text {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .gallery-item:hover .gallery-item-text {
+            opacity: 1;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-white min-h-screen">
-    
-    <header class="bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <svg class="w-8 h-8 pulse-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                    </svg>
-                    <div>
-                        <h1 class="text-xl md:text-2xl font-bold">Bài 7: Cách mạng công nghiệp thời hiện đại</h1>
-                        <p class="text-xs md:text-sm text-blue-100">Lịch sử 10 - Cánh Diều</p>
-                    </div>
-                </div>
-                <button id="menuBtn" class="md:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
+<body class="selection:bg-orange-600 selection:text-white">
 
-            <nav id="desktopMenu" class="hidden md:flex space-x-1 mt-4 overflow-x-auto">
-                <button onclick="showPage('home')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">🏠 Trang chủ</button>
-                <button onclick="showPage('concept')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">📖 Khái niệm</button>
-                <button onclick="showPage('achievements')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">💡 Thành tựu</button>
-                <button onclick="showPage('industries')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">🏭 Ngành CN</button>
-                <button onclick="showPage('consequences')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">📊 Hệ quả</button>
-                <button onclick="showPage('significance')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">🌟 Ý nghĩa</button>
-                <button onclick="showPage('quiz')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">✅ Kiểm tra</button>
-                <button onclick="showPage('mindmap')" class="nav-btn px-4 py-2 rounded-lg whitespace-nowrap transition hover:bg-blue-500">🧠 Sơ đồ</button>
-            </nav>
+    <header class="relative h-[60vh] md:h-[80vh] overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center motion-blur-image" style="background-image: url('https://placehold.co/1920x1080/0f172a/f97316/svg?text=Industrial+Revolution+Image');">
+            <div class="bokeh-dot"></div>
+            <div class="bokeh-dot"></div>
+            <div class="bokeh-dot"></div>
+            <div class="bokeh-dot"></div>
         </div>
-
-        <nav id="mobileMenu" class="hidden md:hidden bg-blue-700 border-t border-blue-600">
-            <button onclick="showPage('home')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">🏠 Trang chủ</button>
-            <button onclick="showPage('concept')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">📖 Khái niệm</button>
-            <button onclick="showPage('achievements')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">💡 Thành tựu KH-KT</button>
-            <button onclick="showPage('industries')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">🏭 Ngành công nghiệp</button>
-            <button onclick="showPage('consequences')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">📊 Hệ quả</button>
-            <button onclick="showPage('significance')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">🌟 Ý nghĩa</button>
-            <button onclick="showPage('quiz')" class="w-full px-4 py-3 text-left border-b border-blue-600 hover:bg-blue-600">✅ Kiểm tra</button>
-            <button onclick="showPage('mindmap')" class="w-full px-4 py-3 text-left hover:bg-blue-600">🧠 Sơ đồ tư duy</button>
-        </nav>
+        
+        <div class="hero-bg-overlay absolute inset-0 flex flex-col items-center justify-center p-4 z-20">
+            <h1 class="text-4xl md:text-7xl font-extrabold text-white glow-text text-center tracking-wider mb-4">
+                TƯƠNG LAI BẮT ĐẦU
+            </h1>
+            <p class="text-xl md:text-3xl font-light text-slate-200 text-center tracking-wide">
+                Bài 7: Cách mạng Công nghiệp Thời hiện đại (Cuối XIX - Đầu XX)
+            </p>
+            <div class="mt-8">
+                <a href="#summary" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-xl shadow-orange-500/50">
+                    Khám phá ngay &darr;
+                </a>
+            </div>
+        </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8 max-w-5xl">
-        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-            
-            <div id="page-home" class="page-content fade-in">
-                <div class="relative h-64 md:h-96 rounded-xl overflow-hidden mb-8">
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
-                        <div class="text-center text-white space-y-4">
-                            <svg class="w-20 h-20 mx-auto bounce-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                            </svg>
-                            <h2 class="text-3xl md:text-4xl font-bold">Cách mạng Công nghiệp</h2>
-                            <p class="text-xl">Thời hiện đại</p>
-                        </div>
-                    </div>
+    <main class="container mx-auto px-4 py-16 max-w-6xl">
+        
+        <section id="summary" class="mb-24">
+            <h2 class="text-4xl font-bold mb-6 text-center text-orange-500">
+                📚 Tóm tắt & Mục tiêu
+            </h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="bg-slate-800 p-8 rounded-xl shadow-2xl border-l-4 border-orange-500 transition hover:shadow-orange-700/30">
+                    <h3 class="text-2xl font-semibold mb-4 text-orange-400">Tóm tắt Nội dung</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Nghiên cứu về **Cách mạng công nghiệp lần thứ hai** (thời hiện đại), một quá trình chuyển đổi sâu sắc dựa trên **điện năng, động cơ đốt trong** và các ngành công nghiệp mới như **hóa chất, điện lực**. Đây là nền tảng cho sự phát triển của thế kỷ XX và định hình thế giới hiện đại.
+                    </p>
                 </div>
-
-                <h3 class="text-2xl font-bold text-blue-600 mb-4">Giới thiệu</h3>
-                <p class="text-gray-700 leading-relaxed text-lg mb-8">
-                    Bài 7 giúp học sinh hiểu rõ sự phát triển của công nghiệp hiện đại từ cuối thế kỷ XIX, 
-                    các phát minh quan trọng, sự ra đời của ngành công nghiệp mới và tác động của cuộc 
-                    cách mạng này đối với thế giới.
-                </p>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-blue-50 p-6 rounded-xl text-center hover:shadow-lg transition">
-                        <div class="text-5xl mb-3">⚡</div>
-                        <h4 class="font-bold text-lg mb-2">Điện năng</h4>
-                        <p class="text-sm text-gray-600">Nguồn năng lượng mới</p>
-                    </div>
-                    <div class="bg-blue-50 p-6 rounded-xl text-center hover:shadow-lg transition">
-                        <div class="text-5xl mb-3">🚗</div>
-                        <h4 class="font-bold text-lg mb-2">Giao thông</h4>
-                        <p class="text-sm text-gray-600">Ô tô, máy bay hiện đại</p>
-                    </div>
-                    <div class="bg-blue-50 p-6 rounded-xl text-center hover:shadow-lg transition">
-                        <div class="text-5xl mb-3">⚛️</div>
-                        <h4 class="font-bold text-lg mb-2">Công nghệ mới</h4>
-                        <p class="text-sm text-gray-600">Điện tử, nguyên tử</p>
-                    </div>
+                <div class="bg-slate-800 p-8 rounded-xl shadow-2xl border-l-4 border-blue-500 transition hover:shadow-blue-700/30">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Mục tiêu Học tập</h3>
+                    <ul class="space-y-3 text-slate-300 list-disc ml-5">
+                        <li>Giải thích được **khái niệm** và **bối cảnh** CMCN thời hiện đại.</li>
+                        <li>Trình bày được các **thành tựu KH-KT** chủ yếu (điện, động cơ, hóa học).</li>
+                        <li>Phân tích được các **tác động** (hệ quả) của cuộc cách mạng này đối với xã hội.</li>
+                    </ul>
                 </div>
             </div>
+        </section>
 
-            <div id="page-concept" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">📖 Khái niệm</h2>
+        <hr class="border-t border-slate-700 mb-24">
+
+        <section id="timeline" class="mb-24 parallax-section bg-slate-900 py-16" style="background-image: url('https://placehold.co/1920x800/0f172a/000000?text=');">
+            <h2 class="text-4xl font-bold mb-12 text-center text-blue-500 glow-text">
+                ⏳ Dòng thời gian Phát triển
+            </h2>
+            <div class="timeline-container max-w-4xl mx-auto">
                 
-                <div class="space-y-6">
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border-l-4 border-blue-600">
-                        <h3 class="text-xl font-bold mb-3 text-blue-700">Định nghĩa</h3>
-                        <p class="text-gray-700 leading-relaxed">
-                            Cách mạng công nghiệp thời hiện đại là quá trình chuyển đổi sâu sắc trong sản xuất 
-                            công nghiệp, dựa trên những phát minh khoa học kỹ thuật mới, đặc biệt là điện năng 
-                            và động cơ đốt trong, diễn ra từ cuối thế kỷ XIX đến đầu thế kỷ XX.
-                        </p>
-                    </div>
+                <div class="timeline-item transition duration-500 hover:bg-slate-700/30 p-4 rounded-xl">
+                    <p class="text-lg font-bold text-blue-400">1870s</p>
+                    <h3 class="text-2xl font-semibold text-white mt-1">Khởi đầu CMCN Lần 2</h3>
+                    <p class="text-slate-300 mt-2">Đánh dấu bằng sự ra đời của thép giá rẻ và điện năng trong sản xuất.</p>
+                </div>
+                
+                <div class="timeline-item transition duration-500 hover:bg-slate-700/30 p-4 rounded-xl">
+                    <p class="text-lg font-bold text-blue-400">1879</p>
+                    <h3 class="text-2xl font-semibold text-white mt-1">Bóng đèn điện (Edison)</h3>
+                    <p class="text-slate-300 mt-2">Ánh sáng điện thay thế khí gas, mở đường cho sản xuất ban đêm và điện khí hóa cuộc sống.</p>
+                </div>
+                
+                <div class="timeline-item transition duration-500 hover:bg-slate-700/30 p-4 rounded-xl">
+                    <p class="text-lg font-bold text-blue-400">1886</p>
+                    <h3 class="text-2xl font-semibold text-white mt-1">Ô tô động cơ đốt trong (Benz)</h3>
+                    <p class="text-slate-300 mt-2">Sự ra đời của ô tô hiện đại, sử dụng dầu mỏ làm nhiên liệu, tạo ra ngành công nghiệp ô tô khổng lồ.</p>
+                </div>
+                
+                <div class="timeline-item transition duration-500 hover:bg-slate-700/30 p-4 rounded-xl">
+                    <p class="text-lg font-bold text-blue-400">1903</p>
+                    <h3 class="text-2xl font-semibold text-white mt-1">Máy bay (Anh em nhà Wright)</h3>
+                    <p class="text-slate-300 mt-2">Khởi đầu kỷ nguyên hàng không, thay đổi mãi mãi giao thông và chiến tranh.</p>
+                </div>
 
-                    <div class="bg-blue-50 p-6 rounded-xl">
-                        <h3 class="text-xl font-bold mb-3 text-blue-700">Thời điểm xuất hiện</h3>
-                        <ul class="space-y-2 text-gray-700">
-                            <li>• Bắt đầu từ những năm 70 của thế kỷ XIX</li>
-                            <li>• Phát triển mạnh mẽ đầu thế kỷ XX</li>
-                            <li>• Tiếp tục với các công nghệ mới trong suốt thế kỷ XX</li>
-                        </ul>
-                    </div>
+            </div>
+        </section>
 
-                    <div class="bg-indigo-50 p-6 rounded-xl">
-                        <h3 class="text-xl font-bold mb-3 text-blue-700">So sánh với Cách mạng công nghiệp lần thứ nhất</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="border-b-2 border-blue-600">
-                                        <th class="pb-3 pr-4 font-bold">Tiêu chí</th>
-                                        <th class="pb-3 pr-4 font-bold">CMCN lần 1</th>
-                                        <th class="pb-3 font-bold">CMCN thời hiện đại</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700">
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-3 font-semibold">Năng lượng</td>
-                                        <td class="py-3">Than đá, máy hơi nước</td>
-                                        <td class="py-3">Điện, dầu mỏ, năng lượng nguyên tử</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-3 font-semibold">Ngành chủ đạo</td>
-                                        <td class="py-3">Dệt may, luyện kim</td>
-                                        <td class="py-3">Điện lực, hóa chất, điện tử</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-3 font-semibold">Giao thông</td>
-                                        <td class="py-3">Tàu hỏa, tàu thủy hơi nước</td>
-                                        <td class="py-3">Ô tô, máy bay, tàu điện</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 font-semibold">Đặc điểm</td>
-                                        <td class="py-3">Cơ khí hóa</td>
-                                        <td class="py-3">Tự động hóa, điện khí hóa</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <hr class="border-t border-slate-700 mb-24">
+
+        <section id="gallery" class="mb-24">
+            <h2 class="text-4xl font-bold mb-12 text-center text-orange-500">
+                🖼️ Thành tựu qua Hình ảnh
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <div class="gallery-item relative overflow-hidden rounded-xl shadow-xl cursor-pointer">
+                    <img class="gallery-item-img w-full h-64 object-cover" src="https://placehold.co/600x400/222222/f97316?text=BÓNG+ĐÈN+ĐIỆN" alt="Bóng đèn điện">
+                    <div class="gallery-item-text absolute inset-0 bg-slate-900/80 flex items-center justify-center p-4">
+                        <p class="text-lg font-bold text-orange-400 text-center">💡 Điện năng: Thắp sáng thế giới</p>
                     </div>
                 </div>
-            </div>
 
-            <div id="page-achievements" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">💡 Thành tựu Khoa học - Kỹ thuật</h2>
-                <div class="bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-500 mb-6">
-                    <h3 class="text-xl font-bold mb-4 text-orange-700">⚡ Công nghệ điện và động cơ đốt trong</h3>
-                    <ul class="space-y-3 text-gray-700">
-                        <li><strong>Điện năng:</strong> Thomas Edison phát minh bóng đèn điện (1879)</li>
-                        <li><strong>Động cơ đốt trong:</strong> Rudolf Diesel (1892)</li>
-                        <li><strong>Ý nghĩa:</strong> Thay đổi hoàn toàn cách thức sản xuất</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="page-industries" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">🏭 Các ngành công nghiệp mới</h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-yellow-100 p-6 rounded-xl">
-                        <h3 class="font-bold text-lg mb-3">⚡ Công nghiệp điện lực</h3>
-                        <p class="text-sm">Xây dựng nhà máy điện, lưới điện quốc gia</p>
-                    </div>
-                    <div class="bg-blue-100 p-6 rounded-xl">
-                        <h3 class="font-bold text-lg mb-3">🏭 Hóa chất - Dầu mỏ</h3>
-                        <p class="text-sm">Khai thác dầu mỏ, sản xuất hóa chất</p>
+                <div class="gallery-item relative overflow-hidden rounded-xl shadow-xl cursor-pointer">
+                    <img class="gallery-item-img w-full h-64 object-cover" src="https://placehold.co/600x400/222222/3b82f6?text=DÂY+CHUYỀN+SẢN+XUẤT" alt="Dây chuyền sản xuất">
+                    <div class="gallery-item-text absolute inset-0 bg-slate-900/80 flex items-center justify-center p-4">
+                        <p class="text-lg font-bold text-blue-400 text-center">🏭 Dây chuyền: Tăng năng suất</p>
                     </div>
                 </div>
-            </div>
 
-            <div id="page-consequences" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">📊 Hệ quả</h2>
-                <div class="bg-green-50 p-6 rounded-xl mb-6">
-                    <h3 class="text-xl font-bold mb-3 text-green-700">✅ Tích cực</h3>
-                    <ul class="space-y-2">
-                        <li>📈 Tăng năng suất lao động</li>
-                        <li>🌍 Thúc đẩy thương mại quốc tế</li>
-                        <li>🏙️ Đô thị hóa mạnh mẽ</li>
-                    </ul>
-                </div>
-                <div class="bg-red-50 p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-3 text-red-700">❌ Tiêu cực</h3>
-                    <ul class="space-y-2">
-                        <li>🏭 Ô nhiễm môi trường</li>
-                        <li>⚖️ Chênh lệch phát triển</li>
-                        <li>🤖 Thất nghiệp do tự động hóa</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="page-significance" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">🌟 Ý nghĩa</h2>
-                <div class="bg-gradient-to-r from-yellow-400 to-orange-400 text-white p-8 rounded-xl mb-6">
-                    <h3 class="text-2xl font-bold mb-3">Ý nghĩa lịch sử</h3>
-                    <p class="text-lg">Đưa nhân loại vào thời đại công nghiệp hiện đại</p>
-                </div>
-                <div class="bg-blue-600 text-white p-6 rounded-xl">
-                    <h3 class="font-bold text-xl mb-3">Nền tảng cho tương lai</h3>
-                    <p>✨ Cách mạng công nghiệp 3.0 và 4.0</p>
-                </div>
-            </div>
-
-            <div id="page-quiz" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">✅ Kiểm tra kiến thức</h2>
-                <div id="quizContainer"></div>
-                <button id="submitQuiz" class="hidden mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 w-full">Nộp bài</button>
-                <div id="quizResult" class="hidden mt-6 p-6 rounded-xl"></div>
-            </div>
-
-            <div id="page-mindmap" class="page-content hidden">
-                <h2 class="text-3xl font-bold text-blue-600 mb-6">🧠 Sơ đồ tư duy</h2>
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-xl">
-                    <div class="flex flex-col items-center space-y-6">
-                        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-6 rounded-2xl text-center">
-                            <h3 class="text-2xl font-bold">Cách mạng công nghiệp thời hiện đại</h3>
-                        </div>
-                        <div class="grid md:grid-cols-3 gap-4 w-full">
-                            <div class="bg-yellow-100 p-4 rounded-xl border-4 border-yellow-400">
-                                <h4 class="font-bold mb-2">📅 Thời gian</h4>
-                                <p class="text-sm">Cuối thế kỷ XIX</p>
-                            </div>
-                            <div class="bg-green-100 p-4 rounded-xl border-4 border-green-400">
-                                <h4 class="font-bold mb-2">⚡ Năng lượng</h4>
-                                <p class="text-sm">Điện, dầu mỏ</p>
-                            </div>
-                            <div class="bg-purple-100 p-4 rounded-xl border-4 border-purple-400">
-                                <h4 class="font-bold mb-2">🔧 Công nghệ</h4>
-                                <p class="text-sm">Tự động hóa</p>
-                            </div>
-                        </div>
+                <div class="gallery-item relative overflow-hidden rounded-xl shadow-xl cursor-pointer">
+                    <img class="gallery-item-img w-full h-64 object-cover" src="https://placehold.co/600x400/222222/f97316?text=ĐỘNG+CƠ+ĐỐT+TRONG" alt="Động cơ đốt trong">
+                    <div class="gallery-item-text absolute inset-0 bg-slate-900/80 flex items-center justify-center p-4">
+                        <p class="text-lg font-bold text-orange-400 text-center">🚗 Động cơ: Tốc độ và Vận tải</p>
                     </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        </section>
+
+        <hr class="border-t border-slate-700 mb-24">
+
+        <section id="quiz" class="mb-24">
+            <h2 class="text-4xl font-bold mb-8 text-center text-blue-500 glow-text">
+                ✅ Kiểm tra Kiến thức
+            </h2>
+            <div id="quiz-container" class="max-w-3xl mx-auto space-y-6">
+                </div>
+            <div class="text-center mt-8">
+                <button id="submit-quiz" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded-lg transition duration-300">
+                    Nộp Bài
+                </button>
+            </div>
+            <div id="quiz-result" class="max-w-3xl mx-auto mt-8 p-6 text-center text-xl font-semibold hidden rounded-xl shadow-lg"></div>
+        </section>
+
     </main>
 
-    <button id="scrollTopBtn" class="hidden fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-2xl hover:bg-blue-700 transition z-50">
-        ↑
-    </button>
-
-    <footer class="bg-gray-800 text-white py-6 mt-12">
+    <footer class="bg-slate-950 py-12 border-t border-slate-700">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-sm mb-1">📚 Bài 7: Cách mạng công nghiệp thời hiện đại - Lịch sử 10 Cánh Diều</p>
-            <p class="text-xs text-gray-400">⚡ **Made by Tổ :3** ⚡</p>
+            <p class="text-slate-400 mb-2 text-lg">
+                &copy; 2025 Tài liệu Giáo dục Lịch sử 10 - Bài 7
+            </p>
+            <p class="text-slate-500 text-sm">
+                **Nội dung:** Tổ 3
+            </p>
+            <p class="text-slate-500 text-sm mt-1">
+                **Make by:** Thanh
+            </p>
         </div>
     </footer>
 
     <script>
-        // Quiz data
+        // Dữ liệu Quiz
         const quizData = [
             {
-                question: "Cách mạng công nghiệp thời hiện đại bắt đầu từ thời gian nào?",
-                options: ["Đầu thế kỷ XVIII", "Cuối thế kỷ XIX", "Giữa thế kỷ XX", "Đầu thế kỷ XXI"],
+                question: "1. Nguồn năng lượng chủ yếu của Cách mạng Công nghiệp thời hiện đại (Lần 2) là gì?",
+                options: ["Than đá", "Điện năng và dầu mỏ", "Năng lượng gió", "Hơi nước"],
                 correct: 1
             },
             {
-                question: "Nguồn năng lượng chủ yếu là gì?",
-                options: ["Than đá", "Điện và dầu mỏ", "Gió và nước", "Năng lượng mặt trời"],
-                correct: 1
-            },
-            {
-                question: "Ai phát minh động cơ đốt trong?",
-                options: ["Thomas Edison", "Rudolf Diesel", "Alexander Bell", "Wright Brothers"],
-                correct: 1
-            },
-            {
-                question: "Phương tiện nào KHÔNG phải thành tựu của CMCN thời hiện đại?",
-                options: ["Ô tô", "Máy bay", "Tàu hỏa", "Tàu thủy diesel"],
+                question: "2. Thành tựu khoa học kỹ thuật nào đã làm thay đổi ngành giao thông vận tải cá nhân?",
+                options: ["Máy hơi nước", "Máy dệt chạy bằng sức nước", "Động cơ đốt trong", "Kĩ thuật luyện gang thép"],
                 correct: 2
             },
             {
-                question: "Hệ quả TIÊU CỰC nào liên quan đến CMCN?",
-                options: ["Tăng năng suất", "Ô nhiễm môi trường", "Đô thị hóa", "Phát triển thương mại"],
+                question: "3. Hệ quả lớn nhất của CMCN lần 2 đối với sản xuất là gì?",
+                options: ["Thủ công nghiệp phát triển", "Áp dụng dây chuyền sản xuất hàng loạt", "Sản xuất nông nghiệp tăng", "Thương mại bị đình trệ"],
                 correct: 1
             }
         ];
 
-        let quizAnswers = {};
+        let userAnswers = {}; // Lưu trữ đáp án của người dùng
 
-        // Page navigation
-        function showPage(pageId) {
-            document.querySelectorAll('.page-content').forEach(page => {
-                page.classList.add('hidden');
-            });
-            document.getElementById('page-' + pageId).classList.remove('hidden');
-            document.getElementById('page-' + pageId).classList.add('fade-in');
-            
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active-nav');
-            });
-            
-            document.getElementById('mobileMenu').classList.add('hidden');
-            window.scrollTo(0, 0);
-            
-            if (pageId === 'quiz') {
-                renderQuiz();
-            }
-        }
-
-        // Menu toggle
-        document.getElementById('menuBtn').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        });
-
-        // Scroll to top
-        window.addEventListener('scroll', function() {
-            const scrollBtn = document.getElementById('scrollTopBtn');
-            if (window.scrollY > 300) {
-                scrollBtn.classList.remove('hidden');
-            } else {
-                scrollBtn.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('scrollTopBtn').addEventListener('click', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Quiz functions
+        // Hàm render Quiz
         function renderQuiz() {
-            const container = document.getElementById('quizContainer');
+            const container = document.getElementById('quiz-container');
             container.innerHTML = '';
-            quizAnswers = {};
             
             quizData.forEach((q, qIndex) => {
                 const qDiv = document.createElement('div');
-                qDiv.className = 'bg-gray-50 p-6 rounded-xl border-2 border-gray-200 mb-6';
-                qDiv.innerHTML = '<h3 class="font-bold text-lg mb-4">Câu ' + (qIndex + 1) + ': ' + q.question + '</h3>';
+                qDiv.className = 'bg-slate-800 p-6 rounded-xl shadow-xl border-t-2 border-orange-500 fade-in';
+                
+                // Câu hỏi
+                qDiv.innerHTML = `<h3 class="text-xl font-bold mb-4 text-white">${q.question}</h3>`;
                 
                 const optionsDiv = document.createElement('div');
                 optionsDiv.className = 'space-y-3';
                 
                 q.options.forEach((option, oIndex) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'w-full text-left p-4 rounded-lg border-2 bg-white hover:bg-blue-50 transition';
-                    btn.textContent = option;
-                    btn.onclick = function() {
-                        quizAnswers[qIndex] = oIndex;
-                        updateQuizUI();
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.setAttribute('data-qindex', qIndex);
+                    button.setAttribute('data-oindex', oIndex);
+                    button.className = 'quiz-option w-full text-left p-3 rounded-lg border border-slate-700 bg-slate-700 hover:bg-blue-600 transition duration-200';
+                    
+                    button.onclick = function() {
+                        // Lưu đáp án
+                        userAnswers[qIndex] = oIndex;
+                        
+                        // Cập nhật UI: highlight nút được chọn
+                        document.querySelectorAll(`[data-qindex='${qIndex}']`).forEach(btn => {
+                            btn.classList.remove('bg-blue-500', 'border-blue-500');
+                            btn.classList.add('bg-slate-700', 'border-slate-700');
+                        });
+                        this.classList.remove('bg-slate-700', 'border-slate-700');
+                        this.classList.add('bg-blue-500', 'border-blue-500');
                     };
-                    optionsDiv.appendChild(btn);
+                    optionsDiv.appendChild(button);
                 });
                 
                 qDiv.appendChild(optionsDiv);
                 container.appendChild(qDiv);
             });
-            
-            document.getElementById('submitQuiz').classList.remove('hidden');
-            document.getElementById('quizResult').classList.add('hidden');
         }
 
-        function updateQuizUI() {
-            const submitBtn = document.getElementById('submitQuiz');
-            const answered = Object.keys(quizAnswers).length;
-            submitBtn.textContent = 'Nộp bài (' + answered + '/' + quizData.length + ')';
-        }
-
-        document.getElementById('submitQuiz').addEventListener('click', function() {
-            let correct = 0;
+        // Hàm kiểm tra kết quả
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            let correctCount = 0;
             quizData.forEach((q, i) => {
-                if (quizAnswers[i] === q.correct) correct++;
+                if (userAnswers[i] !== undefined && userAnswers[i] === q.correct) {
+                    correctCount++;
+                }
             });
+
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `Bạn đã trả lời đúng ${correctCount}/${quizData.length} câu.`;
             
-            const result = document.getElementById('quizResult');
-            result.classList.remove('hidden');
-            result.className = 'mt-6 p-6 rounded-xl ' + (correct >= 3 ? 'bg-green-50 border-2 border-green-500' : 'bg-orange-50 border-2 border-orange-500');
-            result.innerHTML = '<h3 class="text-2xl font-bold mb-2">Kết quả: ' + correct + '/' + quizData.length + ' điểm</h3>' +
-                '<p class="text-lg">' + (correct >= 3 ? '🎉 Xuất sắc!' : '💪 Cố gắng thêm!') + '</p>' +
-                '<button onclick="renderQuiz()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Làm lại</button>';
-            
-            this.classList.add('hidden');
+            if (correctCount === quizData.length) {
+                resultDiv.classList.add('bg-green-700', 'text-white');
+                resultDiv.classList.remove('bg-red-700', 'text-white', 'bg-yellow-700');
+                resultDiv.innerHTML += '<p class="mt-2 text-2xl">Xuất sắc! 🎉</p>';
+            } else if (correctCount > 0) {
+                resultDiv.classList.add('bg-yellow-700', 'text-white');
+                resultDiv.classList.remove('bg-green-700', 'bg-red-700');
+                resultDiv.innerHTML += '<p class="mt-2">Cố gắng thêm nhé!</p>';
+            } else {
+                resultDiv.classList.add('bg-red-700', 'text-white');
+                resultDiv.classList.remove('bg-green-700', 'bg-yellow-700');
+                resultDiv.innerHTML += '<p class="mt-2">Hãy xem lại bài!</p>';
+            }
         });
 
-        // Blur Motion Effect (JavaScript)
-        const mainContent = document.querySelector('main');
-        let scrollTimeout;
-
-        mainContent.classList.add('blur-motion'); // Thêm lớp chuyển đổi cho Main
-
-        window.addEventListener('scroll', function() {
-            // Thêm lớp khi bắt đầu cuộn
-            mainContent.classList.add('is-scrolling');
-            
-            // Xóa lớp sau khi dừng cuộn một chút
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function() {
-                mainContent.classList.remove('is-scrolling');
-            }, 50); // Độ trễ ngắn để tạo hiệu ứng mượt
-        });
-
-        // Initialize
-        showPage('home');
+        // Khởi tạo Quiz khi trang tải xong
+        document.addEventListener('DOMContentLoaded', renderQuiz);
     </script>
 </body>
 </html>
